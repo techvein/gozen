@@ -1,0 +1,43 @@
+machine:
+  timezone:
+    Asia/Tokyo
+  environment:
+    GOROOT: "$HOME/go"
+    GOPATH: "$HOME/gopath"
+    GO15VENDOREXPERIMENT: "1"
+    PATH: "$PATH:$GOROOT/bin:$GOPATH/bin"
+
+checkout:
+  post:
+    - mkdir -p "$GOPATH/src"
+
+database:
+  override:
+    - mv "$HOME/$CIRCLE_PROJECT_REPONAME" "$GOPATH/src"
+
+  post:
+    - mysql -u root < $GOPATH/src/gozen/db/test/init_setup.sql
+    - mysql -u root < $GOPATH/src/gozen/db/test/create_database.sql
+
+#dependencies:
+
+test:
+  pre:
+    # go をダウンロードしてインストール
+    - wget https://storage.googleapis.com/golang/go1.5.4.linux-amd64.tar.gz -O $HOME/golang1.5.4.tar.gz
+    - tar zxf $HOME/golang1.5.4.tar.gz -C $HOME
+
+    - rm -Rf $GOPATH/src/gozen/vendor/*
+
+    - cd $GOPATH/src/gozen && go vet ./...
+
+    # 必要パッケージインストール
+    - go run $GOPATH/src/gozen/tools/init.go
+
+
+  override:
+    # コンパイル出来るか試す
+    - cd $GOPATH/src/gozen/api && go build
+    - cd $GOPATH/src/gozen/controllers && go test -bench . -benchmem
+
+#deployment:

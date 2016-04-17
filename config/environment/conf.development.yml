@@ -1,0 +1,22 @@
+database:
+  adapter: mysql
+  database: gozen
+  username: gozen
+  password: rootpass
+  host: 127.0.0.1
+  port: 3306
+
+
+oauth:
+  github:
+    client_id:
+    client_secret:
+  google:
+    client_id:
+    client_secret:
+    redirect_url: http://api.gozen.com/oauth/google_cb
+
+
+log:
+  verbose: true
+  file_path: /var/work/src/gozen/gozen.log
