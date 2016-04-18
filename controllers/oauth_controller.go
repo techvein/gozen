@@ -1,20 +1,19 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 	"github.com/google/logger"
 
+	"gozen/config"
 	"gozen/models"
 	"gozen/oauth"
 )
 
-// TODO 暫定的に定数化 環境別設定にしたい
-const after_auth_url = "http://example.com/auth?token="
-
 // 認証コントローラー
-type OAuthController struct{}
+type OAuthController struct {}
 
 // Githubログインへリダイレクトを行う
 func (self OAuthController) GithubLogin() gin.HandlerFunc {
@@ -28,19 +27,10 @@ func (self OAuthController) GithubLogin() gin.HandlerFunc {
 func (self OAuthController) GithubCallBack() gin.HandlerFunc {
 	return jsonController(func(c *gin.Context) (interface{}, models.Error) {
 		githubUser, err := oauth.NewOAuthGitHub().Callback(c.Query("state"), c.Query("code"))
-
 		if err != nil {
 			return nil, models.NewError(http.StatusBadRequest, err.Error())
 		}
-
-		token, err := models.NewUser().Auth(githubUser)
-
-		url := after_auth_url + token
-
-		logger.Infoln(url)
-		c.Redirect(http.StatusTemporaryRedirect, url)
-
-		return nil, nil
+		return commonOauthController(c, githubUser)
 	})
 }
 
@@ -56,18 +46,21 @@ func (self OAuthController) GoogleLogin() gin.HandlerFunc {
 func (self OAuthController) GoogleCallBack() gin.HandlerFunc {
 	return jsonController(func(c *gin.Context) (interface{}, models.Error) {
 		googleUser, err := oauth.NewOAuthGoogle().Callback(c.Query("state"), c.Query("code"))
-
 		if err != nil {
 			return nil, models.NewError(http.StatusBadRequest, err.Error())
 		}
-
-		token, err := models.NewUser().Auth(googleUser)
-
-		url := after_auth_url + token
-
-		logger.Infoln(url)
-		c.Redirect(http.StatusTemporaryRedirect, url)
-
-		return nil, nil
+		return commonOauthController(c, googleUser)
 	})
+}
+
+func commonOauthController(c *gin.Context, user oauth.User) (interface{}, models.Error) {
+	token, err := models.NewUser().Auth(user)
+	if err != nil {
+		return nil, models.NewError(http.StatusBadRequest, err.Error())
+	}
+	url := fmt.Sprintf("%s?token=%s", config.Oauth.AfterOauthUrl, token)
+
+	logger.Infoln(url)
+	c.Redirect(http.StatusTemporaryRedirect, url)
+	return nil, nil
 }

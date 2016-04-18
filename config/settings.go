@@ -111,8 +111,10 @@ type databaseYml struct {
 }
 
 type oauthYml struct {
-	Github clientYml
-	Google clientYml
+	// oauth認証後に遷移するurl
+	AfterOauthUrl string `yaml:"after_oauth_url"`
+	Github        clientYml
+	Google        clientYml
 }
 
 type clientYml struct {
