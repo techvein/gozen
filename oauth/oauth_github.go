@@ -11,7 +11,7 @@ import (
 	"gozen/config"
 )
 
-type OAuthGithub struct {
+type oAuthGithub struct {
 	*github.User
 }
 
@@ -35,17 +35,17 @@ var (
 	oauthStateString = "thisshouldberandom"
 )
 
-func NewOAuthGitHub() *OAuthGithub {
-	return new(OAuthGithub)
+func NewOAuthGitHub() User {
+	return new(oAuthGithub)
 }
 
 // リダイレクトURLを作成する
-func (self *OAuthGithub) GenerateLoginUrl() string {
+func (self *oAuthGithub) GenerateLoginUrl() string {
 	return oauthConf.AuthCodeURL(oauthStateString, oauth2.AccessTypeOnline)
 }
 
 // CallBack処理を行う
-func (self *OAuthGithub) Callback(state string, code string) (*OAuthGithub, error) {
+func (self *oAuthGithub) Callback(state string, code string) (User, error) {
 	if state != oauthStateString {
 		logger.Errorf("invalid oauth state, expected '%s', got '%s'\n", oauthStateString, state)
 		return nil, errors.New("invalid oauth state")
@@ -78,18 +78,18 @@ func (self *OAuthGithub) Callback(state string, code string) (*OAuthGithub, erro
 		return nil, errors.New("client.Users.Get() faled")
 	}
 
-	return &OAuthGithub{user}, nil
+	return &oAuthGithub{user}, nil
 }
 
-func (self *OAuthGithub) GetID() *int {
+func (self *oAuthGithub) GetID() *int {
 	return self.ID
 }
-func (self *OAuthGithub) GetName() *string {
+func (self *oAuthGithub) GetName() *string {
 	return self.Name
 }
-func (self *OAuthGithub) GetEmail() *string {
+func (self *oAuthGithub) GetEmail() *string {
 	return self.Email
 }
-func (self *OAuthGithub) GetSource() string {
+func (self *oAuthGithub) GetSource() string {
 	return "github"
 }

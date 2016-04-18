@@ -6,4 +6,5 @@ type User interface {
 	GetName() *string
 	GetEmail() *string
 	GetSource() string
+	Callback(state string, code string) (User, error)
 }

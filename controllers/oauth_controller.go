@@ -13,7 +13,7 @@ import (
 )
 
 // 認証コントローラー
-type OAuthController struct {}
+type OAuthController struct{}
 
 // Githubログインへリダイレクトを行う
 func (self OAuthController) GithubLogin() gin.HandlerFunc {
