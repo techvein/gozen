@@ -13,16 +13,16 @@ import (
 )
 
 // 認証コントローラー
-type oAuthController struct {
+type OAuthController struct {
 	oauth.User
 }
 
-func NewOauthController(user oauth.User) oAuthController{
-	return oAuthController{user}
+func NewOauthController(user oauth.User) OAuthController {
+	return OAuthController{user}
 }
 
 // ログインへリダイレクトを行う
-func (self oAuthController) Login() gin.HandlerFunc {
+func (self OAuthController) Login() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		url := self.User.GenerateLoginUrl()
 		c.Redirect(http.StatusTemporaryRedirect, url)
@@ -30,7 +30,7 @@ func (self oAuthController) Login() gin.HandlerFunc {
 }
 
 // CallBack処理を行う
-func (self oAuthController) CallBack() gin.HandlerFunc {
+func (self OAuthController) CallBack() gin.HandlerFunc {
 	return jsonController(func(c *gin.Context) (interface{}, models.Error) {
 		logger.Infoln(c.Request.URL)
 		user, err := self.User.Callback(c.Query("state"), c.Query("code"))
