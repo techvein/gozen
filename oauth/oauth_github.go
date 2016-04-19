@@ -93,3 +93,17 @@ func (self *oAuthGithub) GetEmail() *string {
 func (self *oAuthGithub) GetSource() string {
 	return "github"
 }
+func (self *oAuthGithub) GetClientID() *string {
+	clientID := config.Oauth.Github.ClientID
+	if clientID == "" {
+		return nil
+	}
+	return &clientID
+}
+func (self *oAuthGithub) GetClientSecret() *string {
+	clientSecret := config.Oauth.Github.ClientSecret
+	if clientSecret == "" {
+		return nil
+	}
+	return &clientSecret
+}

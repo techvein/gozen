@@ -23,10 +23,17 @@ func NewOauthController(user oauth.User) OAuthController {
 
 // ログインへリダイレクトを行う
 func (self OAuthController) Login() gin.HandlerFunc {
-	return func(c *gin.Context) {
+	return jsonController(func(c *gin.Context) (interface{}, models.Error) {
+		if self.User.GetClientID() == nil {
+			return nil, models.NewError(http.StatusInternalServerError, "client_id has not been set.")
+		}
+		if self.User.GetClientSecret() == nil {
+			return nil, models.NewError(http.StatusInternalServerError, "client_secret has not been set.")
+		}
 		url := self.User.GenerateLoginUrl()
 		c.Redirect(http.StatusTemporaryRedirect, url)
-	}
+		return nil, nil
+	})
 }
 
 // CallBack処理を行う

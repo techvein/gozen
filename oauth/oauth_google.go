@@ -77,3 +77,17 @@ func (self *oAuthGoogle) GetEmail() *string {
 func (self *oAuthGoogle) GetSource() string {
 	return "google"
 }
+func (self *oAuthGoogle) GetClientID() *string {
+	clientID := config.Oauth.Google.ClientID
+	if clientID == "" {
+		return nil
+	}
+	return &clientID
+}
+func (self *oAuthGoogle) GetClientSecret() *string {
+	clientSecret := config.Oauth.Google.ClientSecret
+	if clientSecret == "" {
+		return nil
+	}
+	return &clientSecret
+}
