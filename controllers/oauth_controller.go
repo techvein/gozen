@@ -13,43 +13,31 @@ import (
 )
 
 // 認証コントローラー
-type OAuthController struct{}
+type oAuthController struct {
+	oauth.User
+}
 
-// Githubログインへリダイレクトを行う
-func (self OAuthController) GithubLogin() gin.HandlerFunc {
+func NewOauthController(user oauth.User) oAuthController{
+	return oAuthController{user}
+}
+
+// ログインへリダイレクトを行う
+func (self oAuthController) Login() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		url := oauth.NewOAuthGitHub().GenerateLoginUrl()
+		url := self.User.GenerateLoginUrl()
 		c.Redirect(http.StatusTemporaryRedirect, url)
 	}
 }
 
-// Github からのCallBack処理を行う
-func (self OAuthController) GithubCallBack() gin.HandlerFunc {
+// CallBack処理を行う
+func (self oAuthController) CallBack() gin.HandlerFunc {
 	return jsonController(func(c *gin.Context) (interface{}, models.Error) {
-		githubUser, err := oauth.NewOAuthGitHub().Callback(c.Query("state"), c.Query("code"))
+		logger.Infoln(c.Request.URL)
+		user, err := self.User.Callback(c.Query("state"), c.Query("code"))
 		if err != nil {
 			return nil, models.NewError(http.StatusBadRequest, err.Error())
 		}
-		return commonOauthController(c, githubUser)
-	})
-}
-
-// Googleログインへリダイレクトを行う
-func (self OAuthController) GoogleLogin() gin.HandlerFunc {
-	return func(c *gin.Context) {
-		url := oauth.NewOAuthGoogle().GenerateLoginUrl()
-		c.Redirect(http.StatusTemporaryRedirect, url)
-	}
-}
-
-// Google からのCallBack処理を行う
-func (self OAuthController) GoogleCallBack() gin.HandlerFunc {
-	return jsonController(func(c *gin.Context) (interface{}, models.Error) {
-		googleUser, err := oauth.NewOAuthGoogle().Callback(c.Query("state"), c.Query("code"))
-		if err != nil {
-			return nil, models.NewError(http.StatusBadRequest, err.Error())
-		}
-		return commonOauthController(c, googleUser)
+		return commonOauthController(c, user)
 	})
 }
 
