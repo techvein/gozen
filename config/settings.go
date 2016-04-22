@@ -115,6 +115,7 @@ type oauthYml struct {
 	AfterOauthUrl string `yaml:"after_oauth_url"`
 	Github        clientYml
 	Google        clientYml
+	Facebook      clientYml
 }
 
 type clientYml struct {

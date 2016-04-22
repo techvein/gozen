@@ -34,6 +34,10 @@ func Routes() *gin.Engine {
 		google := NewOauthController(oauth.NewOAuthGoogle())
 		oauthGroup.GET("/google-login", google.Login())
 		oauthGroup.GET("/google_cb", google.CallBack())
+
+		facebook := NewOauthController(oauth.NewOAuthFacebook())
+		oauthGroup.GET("/facebook-login", facebook.Login())
+		oauthGroup.GET("/facebook_cb", facebook.CallBack())
 	}
 
 	return r

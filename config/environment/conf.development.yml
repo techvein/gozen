@@ -10,12 +10,16 @@ database:
 oauth:
   after_oauth_url: http://example.com
   github:
-    client_id:
+    client_id: 
     client_secret:
   google:
     client_id:
     client_secret:
-    redirect_url: http://api.gozen.com/oauth/google_cb
+    redirect_url: http://api.gozen.com:9000/oauth/google_cb
+  facebook:
+    client_id:
+    client_secret:
+    redirect_url: http://api.gozen.com:9000/oauth/facebook_cb
 
 
 log:
