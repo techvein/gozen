@@ -12,7 +12,7 @@ import (
 	"gozen/config"
 )
 
-type oAuthGoogle struct {
+type OAuthGoogle struct {
 	Id            string `json:"id"`
 	Email         string `json:"email"`
 	VerifiedEmail string `json:"verified_email"`
@@ -40,16 +40,16 @@ var conf = &oauth2.Config{
 }
 
 func NewOAuthGoogle() User {
-	return new(oAuthGoogle)
+	return new(OAuthGoogle)
 }
 
 // リダイレクトURLを作成する
-func (self *oAuthGoogle) GenerateLoginUrl() string {
+func (self *OAuthGoogle) GenerateLoginUrl() string {
 	return conf.AuthCodeURL("state")
 }
 
 // CallBack処理を行う
-func (self *oAuthGoogle) Callback(state string, code string) (User, error) {
+func (self *OAuthGoogle) Callback(state string, code string) (User, error) {
 	var tok, err = conf.Exchange(oauth2.NoContext, code)
 	if err != nil {
 		fmt.Printf("%v", err)
@@ -64,27 +64,27 @@ func (self *oAuthGoogle) Callback(state string, code string) (User, error) {
 	return self, err
 }
 
-func (self *oAuthGoogle) GetID() *int {
+func (self *OAuthGoogle) GetID() *int {
 	id, _ := strconv.Atoi(self.Id)
 	return &id
 }
-func (self *oAuthGoogle) GetName() *string {
+func (self *OAuthGoogle) GetName() *string {
 	return &self.Name
 }
-func (self *oAuthGoogle) GetEmail() *string {
+func (self *OAuthGoogle) GetEmail() *string {
 	return &self.Email
 }
-func (self *oAuthGoogle) GetSource() string {
+func (self *OAuthGoogle) GetSource() string {
 	return "google"
 }
-func (self *oAuthGoogle) GetClientID() *string {
+func (self *OAuthGoogle) GetClientID() *string {
 	clientID := config.Oauth.Google.ClientID
 	if clientID == "" {
 		return nil
 	}
 	return &clientID
 }
-func (self *oAuthGoogle) GetClientSecret() *string {
+func (self *OAuthGoogle) GetClientSecret() *string {
 	clientSecret := config.Oauth.Google.ClientSecret
 	if clientSecret == "" {
 		return nil
