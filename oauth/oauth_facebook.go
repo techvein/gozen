@@ -16,7 +16,7 @@ import (
 	"gozen/models/json"
 )
 
-type oAuthFacebook struct {
+type OAuthFacebook struct {
 	Id        string `json:"id"`
 	Email     string `json:"email"`
 	Name      string `json:"name"`
@@ -51,7 +51,7 @@ var facebookScopes = []string{
 }
 
 func NewOAuthFacebook() User {
-	fb := new(oAuthFacebook)
+	fb := new(OAuthFacebook)
 	fb.conf = &oauth2.Config{
 		ClientID:     config.Oauth.Facebook.ClientID,
 		ClientSecret: config.Oauth.Facebook.ClientSecret,
@@ -63,12 +63,12 @@ func NewOAuthFacebook() User {
 }
 
 // リダイレクトURLを作成する
-func (self *oAuthFacebook) GenerateLoginUrl() string {
+func (self *OAuthFacebook) GenerateLoginUrl() string {
 	return self.conf.AuthCodeURL("")
 }
 
 // CallBack処理を行う
-func (self *oAuthFacebook) Callback(state string, code string) (User, error) {
+func (self *OAuthFacebook) Callback(state string, code string) (User, error) {
 	tok, err := self.conf.Exchange(oauth2.NoContext, code)
 	if err != nil {
 		fmt.Printf("%v", err)
@@ -110,7 +110,7 @@ func (self *oAuthFacebook) Callback(state string, code string) (User, error) {
 	return self, nil
 }
 
-func (self *oAuthFacebook) request(client *http.Client, result interface{}, path string) error {
+func (self *OAuthFacebook) request(client *http.Client, result interface{}, path string) error {
 	response, err := client.Get(fmt.Sprintf("https://graph.facebook.com/v2.6%s", path))
 	if err != nil {
 		return err
@@ -126,27 +126,27 @@ func (self *oAuthFacebook) request(client *http.Client, result interface{}, path
 	return nil
 }
 
-func (self *oAuthFacebook) GetID() *int {
+func (self *OAuthFacebook) GetID() *int {
 	id, _ := strconv.Atoi(self.Id)
 	return &id
 }
-func (self *oAuthFacebook) GetName() *string {
+func (self *OAuthFacebook) GetName() *string {
 	return &self.Name
 }
-func (self *oAuthFacebook) GetEmail() *string {
+func (self *OAuthFacebook) GetEmail() *string {
 	return &self.Email
 }
-func (self *oAuthFacebook) GetSource() string {
+func (self *OAuthFacebook) GetSource() string {
 	return "facebook"
 }
-func (self *oAuthFacebook) GetClientID() *string {
+func (self *OAuthFacebook) GetClientID() *string {
 	clientID := config.Oauth.Facebook.ClientID
 	if clientID == "" {
 		return nil
 	}
 	return &clientID
 }
-func (self *oAuthFacebook) GetClientSecret() *string {
+func (self *OAuthFacebook) GetClientSecret() *string {
 	clientSecret := config.Oauth.Facebook.ClientSecret
 	if clientSecret == "" {
 		return nil
