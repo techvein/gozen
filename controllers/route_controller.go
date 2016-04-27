@@ -2,6 +2,8 @@ package controllers
 
 import (
 	"github.com/gin-gonic/gin"
+
+	"gozen/oauth"
 )
 
 // 参考: https://github.com/konjoot/microservice_experiments/blob/master/gin-gonic/src/router/router.go
@@ -25,12 +27,17 @@ func Routes() *gin.Engine {
 	// OAuth関連
 	oauthGroup := r.Group("oauth")
 	{
-		oauthController := OAuthController{}
-		oauthGroup.GET("/github-login", oauthController.GithubLogin())
-		oauthGroup.GET("/github_cb", oauthController.GithubCallBack())
+		github := NewOauthController(oauth.NewOAuthGitHub())
+		oauthGroup.GET("/github-login", github.Login())
+		oauthGroup.GET("/github_cb", github.CallBack())
 
-		oauthGroup.GET("/google-login", oauthController.GoogleLogin())
-		oauthGroup.GET("/google_cb", oauthController.GoogleCallBack())
+		google := NewOauthController(oauth.NewOAuthGoogle())
+		oauthGroup.GET("/google-login", google.Login())
+		oauthGroup.GET("/google_cb", google.CallBack())
+
+		facebook := NewOauthController(oauth.NewOAuthFacebook())
+		oauthGroup.GET("/facebook-login", facebook.Login())
+		oauthGroup.GET("/facebook_cb", facebook.CallBack())
 	}
 
 	return r

@@ -8,6 +8,7 @@ database:
 
 
 oauth:
+  after_oauth_url: http://example.com
   github:
     client_id: 
     client_secret: 

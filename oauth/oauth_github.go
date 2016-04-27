@@ -35,7 +35,7 @@ var (
 	oauthStateString = "thisshouldberandom"
 )
 
-func NewOAuthGitHub() *OAuthGithub {
+func NewOAuthGitHub() User {
 	return new(OAuthGithub)
 }
 
@@ -45,7 +45,7 @@ func (self *OAuthGithub) GenerateLoginUrl() string {
 }
 
 // CallBack処理を行う
-func (self *OAuthGithub) Callback(state string, code string) (*OAuthGithub, error) {
+func (self *OAuthGithub) Callback(state string, code string) (User, error) {
 	if state != oauthStateString {
 		logger.Errorf("invalid oauth state, expected '%s', got '%s'\n", oauthStateString, state)
 		return nil, errors.New("invalid oauth state")
@@ -92,4 +92,18 @@ func (self *OAuthGithub) GetEmail() *string {
 }
 func (self *OAuthGithub) GetSource() string {
 	return "github"
+}
+func (self *OAuthGithub) GetClientID() *string {
+	clientID := config.Oauth.Github.ClientID
+	if clientID == "" {
+		return nil
+	}
+	return &clientID
+}
+func (self *OAuthGithub) GetClientSecret() *string {
+	clientSecret := config.Oauth.Github.ClientSecret
+	if clientSecret == "" {
+		return nil
+	}
+	return &clientSecret
 }

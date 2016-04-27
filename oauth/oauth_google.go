@@ -39,7 +39,7 @@ var conf = &oauth2.Config{
 	Endpoint:     google.Endpoint,
 }
 
-func NewOAuthGoogle() *OAuthGoogle {
+func NewOAuthGoogle() User {
 	return new(OAuthGoogle)
 }
 
@@ -49,7 +49,7 @@ func (self *OAuthGoogle) GenerateLoginUrl() string {
 }
 
 // CallBack処理を行う
-func (self *OAuthGoogle) Callback(state string, code string) (*OAuthGoogle, error) {
+func (self *OAuthGoogle) Callback(state string, code string) (User, error) {
 	var tok, err = conf.Exchange(oauth2.NoContext, code)
 	if err != nil {
 		fmt.Printf("%v", err)
@@ -76,4 +76,18 @@ func (self *OAuthGoogle) GetEmail() *string {
 }
 func (self *OAuthGoogle) GetSource() string {
 	return "google"
+}
+func (self *OAuthGoogle) GetClientID() *string {
+	clientID := config.Oauth.Google.ClientID
+	if clientID == "" {
+		return nil
+	}
+	return &clientID
+}
+func (self *OAuthGoogle) GetClientSecret() *string {
+	clientSecret := config.Oauth.Google.ClientSecret
+	if clientSecret == "" {
+		return nil
+	}
+	return &clientSecret
 }

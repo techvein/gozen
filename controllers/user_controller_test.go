@@ -48,15 +48,15 @@ func TestUser(t *testing.T) {
 
 	// Authを元に戻す
 	deleteBuilder := db.GetSession().
-	DeleteFrom(models.NewAuth().TableName()).
-	Where("id = ?", lastInsertAuthId)
+		DeleteFrom(models.NewAuth().TableName()).
+		Where("id = ?", lastInsertAuthId)
 	t.Log(deleteBuilder.ToSql())
 	deleteBuilder.Exec()
 
 	// Userを元に戻す
 	deleteBuilder = db.GetSession().
-	DeleteFrom(models.NewUser().TableName()).
-	Where("id = ?", user.Id.Int64)
+		DeleteFrom(models.NewUser().TableName()).
+		Where("id = ?", user.Id.Int64)
 	t.Log(deleteBuilder.ToSql())
 	deleteBuilder.Exec()
 

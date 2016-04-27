@@ -1,73 +1,61 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 	"github.com/google/logger"
 
+	"gozen/config"
 	"gozen/models"
 	"gozen/oauth"
 )
 
-// TODO 暫定的に定数化 環境別設定にしたい
-const after_auth_url = "http://example.com/auth?token="
-
 // 認証コントローラー
-type OAuthController struct{}
-
-// Githubログインへリダイレクトを行う
-func (self OAuthController) GithubLogin() gin.HandlerFunc {
-	return func(c *gin.Context) {
-		url := oauth.NewOAuthGitHub().GenerateLoginUrl()
-		c.Redirect(http.StatusTemporaryRedirect, url)
-	}
+type OAuthController struct {
+	oauth.User
 }
 
-// Github からのCallBack処理を行う
-func (self OAuthController) GithubCallBack() gin.HandlerFunc {
+func NewOauthController(user oauth.User) OAuthController {
+	return OAuthController{user}
+}
+
+// ログインへリダイレクトを行う
+func (self OAuthController) Login() gin.HandlerFunc {
 	return jsonController(func(c *gin.Context) (interface{}, models.Error) {
-		githubUser, err := oauth.NewOAuthGitHub().Callback(c.Query("state"), c.Query("code"))
-
-		if err != nil {
-			return nil, models.NewError(http.StatusBadRequest, err.Error())
+		if self.User.GetClientID() == nil {
+			return nil, models.NewError(http.StatusInternalServerError, "client_id has not been set.")
 		}
-
-		token, err := models.NewUser().Auth(githubUser)
-
-		url := after_auth_url + token
-
-		logger.Infoln(url)
+		if self.User.GetClientSecret() == nil {
+			return nil, models.NewError(http.StatusInternalServerError, "client_secret has not been set.")
+		}
+		url := self.User.GenerateLoginUrl()
 		c.Redirect(http.StatusTemporaryRedirect, url)
-
 		return nil, nil
 	})
 }
 
-// Googleログインへリダイレクトを行う
-func (self OAuthController) GoogleLogin() gin.HandlerFunc {
-	return func(c *gin.Context) {
-		url := oauth.NewOAuthGoogle().GenerateLoginUrl()
-		c.Redirect(http.StatusTemporaryRedirect, url)
-	}
-}
-
-// Google からのCallBack処理を行う
-func (self OAuthController) GoogleCallBack() gin.HandlerFunc {
+// CallBack処理を行う
+func (self OAuthController) CallBack() gin.HandlerFunc {
 	return jsonController(func(c *gin.Context) (interface{}, models.Error) {
-		googleUser, err := oauth.NewOAuthGoogle().Callback(c.Query("state"), c.Query("code"))
-
+		logger.Infoln(c.Request.URL)
+		user, err := self.User.Callback(c.Query("state"), c.Query("code"))
 		if err != nil {
 			return nil, models.NewError(http.StatusBadRequest, err.Error())
 		}
-
-		token, err := models.NewUser().Auth(googleUser)
-
-		url := after_auth_url + token
-
-		logger.Infoln(url)
-		c.Redirect(http.StatusTemporaryRedirect, url)
-
-		return nil, nil
+		return commonOauthController(c, user)
 	})
+}
+
+func commonOauthController(c *gin.Context, user oauth.User) (interface{}, models.Error) {
+	token, err := models.NewUser().Auth(user)
+	if err != nil {
+		return nil, models.NewError(http.StatusBadRequest, err.Error())
+	}
+	url := fmt.Sprintf("%s?token=%s", config.Oauth.AfterOauthUrl, token)
+
+	logger.Infoln(url)
+	c.Redirect(http.StatusTemporaryRedirect, url)
+	return nil, nil
 }
