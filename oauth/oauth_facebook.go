@@ -90,24 +90,30 @@ func (self *OAuthFacebook) Callback(state string, code string) (User, error) {
 
 	// https://developers.facebook.com/docs/graph-api/reference/v2.6/debug_token/
 	facebookToken := "" // TODO
+	if _, err := self.CheckToken(client, accessToken, facebookToken); err != nil {
+		return nil, err
+	}
+
+	return self, nil
+}
+
+func (self *OAuthFacebook) CheckToken(client *http.Client, accessToken *facebookAccessToken, facebookToken string) (bool, error) {
 	facebookData := &facebookData{}
-	err = self.request(client, facebookData,
+	err := self.request(client, facebookData,
 		fmt.Sprintf(
 			"/debug_token?input_token=%s&access_token=%s",
 			facebookToken,
 			*accessToken.AccessToken,
 		))
 	if err != err {
-		return nil, err
+		return false, errors.New("request error.")
 	}
 
-	//
 	logger.Infoln(facebookData.Data.AppID)
 	if facebookData.Data.AppID != self.conf.ClientID {
-		//facebookId=969858429744131
+		return false, errors.New("The facebookToken is wrong.")
 	}
-
-	return self, nil
+	return true, nil
 }
 
 func (self *OAuthFacebook) request(client *http.Client, result interface{}, path string) error {
