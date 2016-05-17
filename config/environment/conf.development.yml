@@ -25,3 +25,8 @@ oauth:
 log:
   verbose: true
   file_path: /var/work/src/gozen/gozen.log
+
+push:
+    gcm:
+      api_key:
+

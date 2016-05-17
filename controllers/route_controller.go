@@ -20,6 +20,13 @@ func Routes() *gin.Engine {
 		{
 			userController := UserController{}
 			userGroup.GET("/profile", userController.Profile())
+			userGroup.POST("/registrationid", userController.RegistrationID())
+		}
+
+		pushGroup := api.Group("push")
+		{
+			pushNotificationController := PushNotificationController{}
+			pushGroup.POST("/send", pushNotificationController.Send())
 		}
 
 	}

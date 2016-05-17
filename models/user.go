@@ -12,15 +12,17 @@ import (
 	"gozen/db"
 	"gozen/models/json"
 	"gozen/oauth"
+	"net/http"
 )
 
 type User struct {
-	Id           dbr.NullInt64 `db:"id"`
-	Name         string        `db:"name"`
-	Email        string        `db:"email"`
-	SessionToken string        `db:"session_token"`
-	TokenExpire  dbr.NullTime  `db:"token_expire"`
-	LastLoginAt  dbr.NullTime  `db:"last_login_at"`
+	Id           dbr.NullInt64  `db:"id"`
+	Name         string         `db:"name"`
+	Email        string         `db:"email"`
+	SessionToken string         `db:"session_token"`
+	TokenExpire  dbr.NullTime   `db:"token_expire"`
+	RegID        dbr.NullString `db:"registration_id"`
+	LastLoginAt  dbr.NullTime   `db:"last_login_at"`
 	CreatedAt    dbr.NullTime
 	UpdatedAt    dbr.NullTime
 }
@@ -188,6 +190,21 @@ func (self *User) FindUserBySessionToken(token string) error {
 	}
 	logger.Infoln(self.Id)
 	LoginUser = self
+	return nil
+}
+
+func (self *User) SaveRegistrationID(regID string) error {
+	if LoginUser == nil {
+		return NewError(http.StatusNotAcceptable, "you must login")
+	}
+	_, err := db.GetSession().Update(self.TableName()).Set(
+		"registration_id", regID,
+	).Where(
+		dbr.Eq(self.TableName()+".id", LoginUser.Id.Int64),
+	).Exec()
+	if err != nil {
+		return err
+	}
 	return nil
 }
 
