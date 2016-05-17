@@ -65,6 +65,7 @@ func (env Env) Name() string {
 var Db databaseYml
 var Oauth oauthYml
 var Log logYml
+var Push pushYml
 
 func init() {
 	gopath := os.Getenv("GOPATH")
@@ -85,6 +86,7 @@ func init() {
 	}
 	Db = conf.Database
 	Oauth = conf.Oauth
+	Push = conf.Push
 
 	// "file_path"の設定がなければgopath/log/gozen.logに設定する
 	// "verbose"の設定がない場合はfalseになる
@@ -99,6 +101,7 @@ type confYml struct {
 	Database databaseYml `yaml:"database"`
 	Oauth    oauthYml    `yaml:"oauth"`
 	Log      logYml      `yaml:"log"`
+	Push     pushYml     `yaml:"push"`
 }
 
 type databaseYml struct {
@@ -128,4 +131,11 @@ type clientYml struct {
 type logYml struct {
 	Verbose  bool   `yaml:"verbose"`
 	FilePath string `yaml:"file_path"`
+}
+type pushYml struct {
+	Gcm gcmYml `yaml:"gcm"`
+}
+
+type gcmYml struct {
+	ApiKey string `yaml:"api_key"`
 }
