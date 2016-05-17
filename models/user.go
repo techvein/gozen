@@ -4,6 +4,7 @@ import (
 	"crypto/rand"
 	"encoding/base64"
 	"io"
+	"net/http"
 	"time"
 
 	"github.com/gocraft/dbr"
@@ -12,7 +13,6 @@ import (
 	"gozen/db"
 	"gozen/models/json"
 	"gozen/oauth"
-	"net/http"
 )
 
 type User struct {
