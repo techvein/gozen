@@ -5,7 +5,8 @@ machine:
     GOROOT: "$HOME/go"
     GOPATH: "$HOME/gopath"
     GO15VENDOREXPERIMENT: "1"
-    PATH: "$PATH:$GOROOT/bin:$GOPATH/bin"
+    # PATH: "$PATH:$GOROOT/bin:$GOPATH/bin"
+    PATH: "$PATH:$GOPATH/bin"
 
 checkout:
   post:
