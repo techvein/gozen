@@ -29,15 +29,15 @@ test:
 
     - rm -Rf $GOPATH/src/gozen/vendor/*
 
-    - cd $GOPATH/src/gozen && go vet ./...
+    - cd $GOPATH/src/gozen && $HOME/go/bin/go vet ./...
 
     # 必要パッケージインストール
-    - go run $GOPATH/src/gozen/tools/init.go
+    - $HOME/go/bin/go run $GOPATH/src/gozen/tools/init.go
 
 
   override:
     # コンパイル出来るか試す
-    - cd $GOPATH/src/gozen/api && go build
-    - cd $GOPATH/src/gozen/controllers && go test -bench . -benchmem
+    - cd $GOPATH/src/gozen/api && $HOME/go/bin/go build
+    - cd $GOPATH/src/gozen/controllers && $HOME/go/bin/go test -bench . -benchmem
 
 #deployment:
