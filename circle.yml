@@ -24,8 +24,8 @@ database:
 test:
   pre:
     # go をダウンロードしてインストール
-    - wget https://storage.googleapis.com/golang/go1.5.4.linux-amd64.tar.gz -O $HOME/golang1.5.4.tar.gz
-    - tar zxf $HOME/golang1.5.4.tar.gz -C $HOME
+    - wget https://storage.googleapis.com/golang/go1.7.1.linux-amd64.tar.gz -O $HOME/golang1.7.1.tar.gz
+    - tar zxf $HOME/golang1.7.1.tar.gz -C $HOME
 
     - rm -Rf $GOPATH/src/gozen/vendor/*
 
