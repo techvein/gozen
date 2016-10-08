@@ -24,10 +24,10 @@ database:
 test:
   pre:
     # 最新を使いたいので用意されているgoは削除
-    - rm -rf /usr/local/go
+    - sudo rm -rf /usr/local/go
     # go をダウンロードしてインストール
     - wget https://storage.googleapis.com/golang/go1.7.1.linux-amd64.tar.gz -O $HOME/golang1.7.1.tar.gz
-    - tar zxf $HOME/golang1.7.1.tar.gz -C /usr/local/
+    - sudo tar zxf $HOME/golang1.7.1.tar.gz -C /usr/local/
     - go version
 
     - rm -Rf $GOPATH/src/gozen/vendor/*
