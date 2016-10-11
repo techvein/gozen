@@ -42,6 +42,6 @@ test:
   override:
     # コンパイル出来るか試す
     - cd $GOPATH/src/gozen/api && go build
-    - cd $GOPATH/src/gozen/controllers && $go test -bench . -benchmem
+    - cd $GOPATH/src/gozen/controllers && go test -bench . -benchmem
 
 #deployment:
