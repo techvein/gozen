@@ -2,11 +2,11 @@ machine:
   timezone:
     Asia/Tokyo
   environment:
-    #GOROOT: "$HOME/go"
+    GOROOT: "$HOME/go"
     GOPATH: "$HOME/gopath"
     GO15VENDOREXPERIMENT: "1"
-    # PATH: "$PATH:$GOROOT/bin:$GOPATH/bin"
-    #PATH: "$PATH:$GOPATH/bin"
+    PATH: "$GOROOT/bin:$GOPATH/bin:$PATH"
+    # PATH: "$PATH:$GOPATH/bin"
 
 checkout:
   post:
@@ -16,9 +16,9 @@ database:
   override:
     - mv "$HOME/$CIRCLE_PROJECT_REPONAME" "$GOPATH/src"
 
-  # post:
-  #   - mysql -u root < $GOPATH/src/gozen/db/test/init_setup.sql
-  #   - mysql -u root < $GOPATH/src/gozen/db/test/create_database.sql
+  post:
+    - mysql -u root < $GOPATH/src/gozen/db/test/init_setup.sql
+    - mysql -u root < $GOPATH/src/gozen/db/test/create_database.sql
 
 #dependencies:
 
@@ -28,7 +28,7 @@ test:
     - sudo rm -rf /usr/local/go
     # go をダウンロードしてインストール
     - wget https://storage.googleapis.com/golang/go1.7.1.linux-amd64.tar.gz -O $HOME/golang1.7.1.tar.gz
-    - sudo tar zxf $HOME/golang1.7.1.tar.gz -C /usr/local/
+    - sudo tar zxf $HOME/golang1.7.1.tar.gz -C $HOME
     - go version
 
     - rm -Rf $GOPATH/src/gozen/vendor/*
