@@ -16,9 +16,9 @@ database:
   override:
     - mv "$HOME/$CIRCLE_PROJECT_REPONAME" "$GOPATH/src"
 
-  post:
-    - mysql -u root < $GOPATH/src/gozen/db/test/init_setup.sql
-    - mysql -u root < $GOPATH/src/gozen/db/test/create_database.sql
+  # post:
+  #   - mysql -u root < $GOPATH/src/gozen/db/test/init_setup.sql
+  #   - mysql -u root < $GOPATH/src/gozen/db/test/create_database.sql
 
 #dependencies:
 
