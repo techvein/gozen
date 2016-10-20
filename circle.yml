@@ -6,7 +6,7 @@ machine:
     GOPATH: "$HOME/gopath"
     GO15VENDOREXPERIMENT: "1"
     PATH: "$GOROOT/bin:$GOPATH/bin:$PATH"
-    # PATH: "$PATH:$GOPATH/bin"
+    GO_VERSION: "1.7.3"
 
 checkout:
   post:
@@ -27,8 +27,8 @@ test:
     # 最新を使いたいので用意されているgoは削除
     - sudo rm -rf /usr/local/go
     # go をダウンロードしてインストール
-    - wget https://storage.googleapis.com/golang/go1.7.1.linux-amd64.tar.gz -O $HOME/golang1.7.1.tar.gz
-    - sudo tar zxf $HOME/golang1.7.1.tar.gz -C $HOME
+    - wget https://storage.googleapis.com/golang/go$GO_VERSION.linux-amd64.tar.gz -O $HOME/golang$GO_VERSION.tar.gz
+    - sudo tar zxf $HOME/golang$GO_VERSION.tar.gz -C $HOME
     - go version
 
     - rm -Rf $GOPATH/src/gozen/vendor/*
