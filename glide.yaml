@@ -6,10 +6,18 @@ import:
 - package: github.com/gocraft/dbr
   subpackages:
   - dialect
-- package: github.com/google/go-github/github
+- package: github.com/google/go-github
+  subpackages:
+  - github
 - package: golang.org/x/oauth2
-- package: golang.org/x/oauth2/google
+  version: master
+  subpackages:
+  - google
 - package: github.com/microcosm-cc/bluemonday
 - package: gopkg.in/yaml.v2
 - package: github.com/google/logger
 - package: github.com/google/go-gcm
+- package: golang.org/x/net
+  subpackages:
+  - http2
+- package: google.golang.org/grpc

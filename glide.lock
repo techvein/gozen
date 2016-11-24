@@ -1,0 +1,123 @@
+hash: 4156fed0404e7a1219065a99f532b0a6b000a7f44070f3390c533748aa93d5e3
+updated: 2016-11-24T10:21:07.344793888Z
+imports:
+- name: bitbucket.org/liamstask/goose
+  version: 8488cc47d90c8a502b1c41a462a6d9cc8ee0a895
+  subpackages:
+  - lib/goose
+- name: cloud.google.com/go
+  version: 5eaf111e5069f953c4365a8e93cc23f674630c93
+  subpackages:
+  - compute/metadata
+  - internal
+- name: github.com/gin-gonic/gin
+  version: bb159f9260a262fccbdbd6f37f8575d1e7e6aaa0
+  subpackages:
+  - binding
+  - render
+- name: github.com/go-sql-driver/mysql
+  version: 665b83488b90b902ce0a305ef6652e599771cdf9
+- name: github.com/gocraft/dbr
+  version: 10fa49bf1ee63a0f822283ef9805d818f9e84742
+  subpackages:
+  - dialect
+- name: github.com/golang/protobuf
+  version: 2402d76f3d41f928c7902a765dfc872356dd3aad
+  subpackages:
+  - proto
+- name: github.com/google/go-gcm
+  version: 190e93b4cedb43562b5bd558eb1a1bbd38695bcd
+- name: github.com/google/go-github
+  version: d4f1b2d029be1730fd349ca929cc9c0da4a27007
+  subpackages:
+  - github
+- name: github.com/google/go-querystring
+  version: 9235644dd9e52eeae6fa48efd539fdc351a0af53
+  subpackages:
+  - query
+- name: github.com/google/logger
+  version: f7ee3f06fe52710d18e679d7fc19a6baec611139
+- name: github.com/googleapis/gax-go
+  version: da06d194a00e19ce00d9011a13931c3f6f6887c7
+- name: github.com/jpillora/backoff
+  version: a6f64285fd4072883335339357436b78d62c96a4
+- name: github.com/kylelemons/go-gypsy
+  version: 08cad365cd28a7fba23bb1e57aa43c5e18ad8bb8
+  subpackages:
+  - yaml
+- name: github.com/lib/pq
+  version: d8eeeb8bae8896dd8e1b7e514ab0d396c4f12a1b
+  subpackages:
+  - oid
+- name: github.com/manucorporat/sse
+  version: ee05b128a739a0fb76c7ebd3ae4810c1de808d6d
+- name: github.com/mattn/go-sqlite3
+  version: fba66eb11643069e747022997e9be3b502b2c6fb
+- name: github.com/mattn/go-xmpp
+  version: f4550b5399387339df5ce4c3f88c1ef85333bdd5
+- name: github.com/microcosm-cc/bluemonday
+  version: f77f16ffc87a6a58814e64ae72d55f9c41374e6d
+- name: github.com/pborman/uuid
+  version: 3d4f2ba23642d3cfd06bd4b54cf03d99d95c0f1b
+- name: github.com/russross/blackfriday
+  version: 5f33e7b7878355cd2b7e6b8eefc48a5472c69f70
+- name: github.com/ziutek/mymysql
+  version: 501176fc99be4b4fb0fd01ae8d6af5d8bb408e44
+  subpackages:
+  - godrv
+  - mysql
+  - native
+- name: golang.org/x/net
+  version: f315505cf3349909cdf013ea56690da34e96a451
+  subpackages:
+  - context
+  - context/ctxhttp
+  - http2
+  - http2/hpack
+  - internal/timeseries
+  - trace
+- name: golang.org/x/oauth2
+  version: d5040cddfc0da40b408c9a1da4728662435176a9
+  subpackages:
+  - facebook
+  - github
+  - google
+  - internal
+  - jws
+  - jwt
+- name: golang.org/x/sys
+  version: 30237cf4eefd639b184d1f2cb77a581ea0be8947
+  subpackages:
+  - windows
+  - windows/registry
+  - windows/svc/eventlog
+- name: google.golang.org/appengine
+  version: ca59ef35f409df61fa4a5f8290ff289b37eccfb8
+  subpackages:
+  - internal
+  - internal/app_identity
+  - internal/base
+  - internal/datastore
+  - internal/log
+  - internal/modules
+  - internal/remote_api
+  - internal/urlfetch
+  - urlfetch
+- name: google.golang.org/grpc
+  version: eca2ad68af4d7bf894ada6bd263133f069a441d5
+  subpackages:
+  - codes
+  - credentials
+  - grpclog
+  - internal
+  - metadata
+  - naming
+  - peer
+  - stats
+  - tap
+  - transport
+- name: gopkg.in/go-playground/validator.v8
+  version: c193cecd124b5cc722d7ee5538e945bdb3348435
+- name: gopkg.in/yaml.v2
+  version: a5b47d31c556af34a302ce5d659e6fea44d90de0
+testImports: []
