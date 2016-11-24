@@ -24,7 +24,7 @@ oauth:
 
 log:
   verbose: true
-  file_path: /var/work/src/gozen/gozen.log
+  file_path:
 
 push:
     gcm:
