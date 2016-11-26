@@ -31,7 +31,7 @@ test:
     - sudo tar zxf $HOME/golang$GO_VERSION.tar.gz -C $HOME
     - go version
 
-    - rm -Rf $GOPATH/src/gozen/vendor/*
+    #- rm -Rf $GOPATH/src/gozen/vendor/*
 
     - cd $GOPATH/src/gozen && go vet ./...
 
