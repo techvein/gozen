@@ -19,14 +19,14 @@ var gopath string
 func main() {
 	gopath = os.Getenv("GOPATH")
 
-	quitInstalll := make(chan bool)
+	//quitInstalll := make(chan bool)
 	quitRunMigration := make(chan bool)
 
-	go installLibraries(quitInstalll)
+	//go installLibraries(quitInstalll)
 
 	go runMigration(quitRunMigration)
 
-	<-quitInstalll
+	//<-quitInstalll
 	<-quitRunMigration
 }
 
