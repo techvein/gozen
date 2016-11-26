@@ -37,7 +37,7 @@ test:
 
     # 必要パッケージインストール
     # - go run $GOPATH/src/gozen/tools/init.go
-    - go get bitbucket.org/liamstask/goose/cmd/goose && go run tools/setup.go
+    - go get bitbucket.org/liamstask/goose/cmd/goose && go run $GOPATH/src/gozen/tools/setup.go
     - go get -u github.com/kardianos/govendor && govendor sync
 
 
