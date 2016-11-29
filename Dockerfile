@@ -4,10 +4,11 @@ FROM golang:1.7.3
 ENV MY_PROJECT /myproject
 RUN mkdir $MY_PROJECT
 
+
 # gopath設定
 RUN mkdir -p $MY_PROJECT/gopath
+RUN ./ci-setting.sh
 
-RUN if [[ "${CIRCLECI}" == true ]] ; then echo  "CIRCLECI=${CIRCLECI}" ; fi
 ENV GOPATH $MY_PROJECT/gopath
 ADD ./gopath $GOPATH
 
