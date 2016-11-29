@@ -6,6 +6,8 @@ RUN mkdir $MY_PROJECT
 
 # gopath設定
 RUN mkdir -p $MY_PROJECT/gopath
+
+RUN if [[ "${CIRCLECI}" == true ]] ; then echo  "CIRCLECI=${CIRCLECI}" ; fi
 ENV GOPATH $MY_PROJECT/gopath
 ADD ./gopath $GOPATH
 

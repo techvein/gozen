@@ -4,10 +4,12 @@ machine:
     - sudo pip install docker-compose
   services:
     - docker
-test:
-  pre:
+dependencies:
+  override:
 #    - docker-compose up -d
     - docker-compose build
+test:
+  pre:
     - docker-compose run web go test -bench . -benchmem
 
 
