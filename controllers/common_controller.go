@@ -34,6 +34,21 @@ func jsonController(fn func(*gin.Context) (interface{}, models.Error)) func(*gin
 	}
 }
 
+// HTMLを返す共通コントローラー
+func htmlController(fn func(*gin.Context) (interface{}, error), tmpl string) func(*gin.Context) {
+	return func(c *gin.Context) {
+		repository, err := fn(c)
+		if err != nil {
+			e, ok := err.(models.Error)
+			if ok && e != nil {
+				c.HTML(e.StatusCode(), "error.tmpl.html", e)
+			}
+			return
+		}
+		c.HTML(http.StatusOK, tmpl, repository)
+	}
+}
+
 func noImpl(c *gin.Context) (interface{}, models.Error) {
 	return nil, models.NewError(http.StatusNotFound, "no implemt")
 
