@@ -37,10 +37,13 @@ $ cd $GOPATH/src/gozen
 $ mysql -u root -prootpass < db/setup/mysql.sql
 ```
 
-5.Run setup (install libraries and insert sample data into DB)
+5.Run setup (install libraries)
 
 ```bash
-$ go run $GOPATH/src/gozen/tools/init.go
+$ go get bitbucket.org/liamstask/goose/cmd/goose
+$ go get -u github.com/kardianos/govendor
+$ cd $GOPATH/src/gozen && govendor sync
+$ go run $GOPATH/src/gozen/tools/setup.go
 ```
 
 6.Run build.
@@ -53,8 +56,8 @@ $ ./build.sh
 7.Check the response
 
 ```bash
-$ curl http://localhost:9000/api/users/1
-{"Id":1,"Name":"田中"}
+$ curl http://localhost:9000/api/user/profile
+{"message": "ログインしてください。"}
 ```
 
 ## With Intellij Idea
