@@ -7,9 +7,12 @@ RUN mkdir $MY_PROJECT
 
 # gopath設定
 RUN mkdir -p $MY_PROJECT/gopath
-RUN ./ci-setting.sh
-
 ENV GOPATH $MY_PROJECT/gopath
+
+COPY ./ci-setting.sh $MY_PROJECT
+RUN $MY_PROJECT/ci-setting.sh
+
+
 ADD ./gopath $GOPATH
 
 # goプログラム設定
