@@ -6,6 +6,7 @@ machine:
     - docker
 dependencies:
   override:
+    - mkdir gopath
 #    - docker-compose up -d
     - docker-compose build
 test:
