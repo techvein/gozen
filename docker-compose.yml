@@ -1,0 +1,43 @@
+web:
+  build: .
+  ports:
+    - "5000:9000"
+  volumes:
+    - ./:/myproject
+    - /var/lib/mysql
+  links:
+    - db
+    # - syslog
+  tty: true  
+  # command: bash ./build.sh
+
+db:
+  build: ./mysql
+  ports:
+    - "3306:3306" 
+  environment:
+    MYSQL_ROOT_PASSWORD: rootpass
+    MYSQL_DATABASE: gozen
+    MYSQL_USER: gozen
+    MYSQL_PASSWORD: rootpass
+      # MYSQL_HOST: ""
+
+
+# syslog:
+#   build: ./syslog
+#   ports:
+#     - "514:514"
+#   tty: true
+
+# db:
+#   image: mysql
+#   expose:
+#     - 3306
+#   volumes:
+#       - ./my.cnf:/etc/mysql/conf.d/my.cnf
+#   container_name: mysql
+#   environment:
+#     MYSQL_USER: gozen
+#     MYSQL_PASSWORD: rootpass
+#     MYSQL_ROOT_PASSWORD: rootpass
+#     MYSQL_DATABASE: gozen

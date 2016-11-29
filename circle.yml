@@ -1,50 +1,63 @@
 machine:
-  timezone:
-    Asia/Tokyo
-  environment:
-    GOROOT: "$HOME/go"
-    GOPATH: "$HOME/gopath"
-    GO15VENDOREXPERIMENT: "1"
-    PATH: "$GOROOT/bin:$GOPATH/bin:$PATH"
-    GO_VERSION: "1.7.3"
-
-checkout:
-  post:
-    - mkdir -p "$GOPATH/src"
-
-database:
-  override:
-    - mv "$HOME/$CIRCLE_PROJECT_REPONAME" "$GOPATH/src"
-
-  post:
-    - mysql -u root < $GOPATH/src/gozen/db/test/init_setup.sql
-    - mysql -u root < $GOPATH/src/gozen/db/test/create_database.sql
-
-#dependencies:
-
+  pre:
+    - curl -sSL https://s3.amazonaws.com/circle-downloads/install-circleci-docker.sh | bash -s -- 1.10.0
+    - pip install docker-compose
+  services:
+    - docker
 test:
   pre:
-    # 最新を使いたいので用意されているgoは削除
-    - sudo rm -rf /usr/local/go
-    # go をダウンロードしてインストール
-    - wget https://storage.googleapis.com/golang/go$GO_VERSION.linux-amd64.tar.gz -O $HOME/golang$GO_VERSION.tar.gz
-    - sudo tar zxf $HOME/golang$GO_VERSION.tar.gz -C $HOME
-    - go version
+#    - docker-compose up -d
+    - docker-compose build
+    - docker-compose run web go test -bench . -benchmem
 
-    #- rm -Rf $GOPATH/src/gozen/vendor/*
 
-    - cd $GOPATH/src/gozen && go vet ./...
-
-    # 必要パッケージインストール
-    # - go run $GOPATH/src/gozen/tools/init.go
-    - go get bitbucket.org/liamstask/goose/cmd/goose
-    - go get -u github.com/kardianos/govendor
-    - cd $GOPATH/src/gozen && govendor sync
-    - go run $GOPATH/src/gozen/tools/setup.go
-
-  override:
-    # コンパイル出来るか試す
-    - cd $GOPATH/src/gozen/api && go build
-    - cd $GOPATH/src/gozen/controllers && go test -bench . -benchmem
-
-#deployment:
+#machine:
+#  timezone:
+#    Asia/Tokyo
+#  environment:
+#    GOROOT: "$HOME/go"
+#    GOPATH: "$HOME/gopath"
+#    GO15VENDOREXPERIMENT: "1"
+#    PATH: "$GOROOT/bin:$GOPATH/bin:$PATH"
+#    GO_VERSION: "1.7.3"
+#
+#checkout:
+#  post:
+#    - mkdir -p "$GOPATH/src"
+#
+#database:
+#  override:
+#    - mv "$HOME/$CIRCLE_PROJECT_REPONAME" "$GOPATH/src"
+#
+#  post:
+#    - mysql -u root < $GOPATH/src/gozen/db/test/init_setup.sql
+#    - mysql -u root < $GOPATH/src/gozen/db/test/create_database.sql
+#
+##dependencies:
+#
+#test:
+#  pre:
+#    # 最新を使いたいので用意されているgoは削除
+#    - sudo rm -rf /usr/local/go
+#    # go をダウンロードしてインストール
+#    - wget https://storage.googleapis.com/golang/go$GO_VERSION.linux-amd64.tar.gz -O $HOME/golang$GO_VERSION.tar.gz
+#    - sudo tar zxf $HOME/golang$GO_VERSION.tar.gz -C $HOME
+#    - go version
+#
+#    #- rm -Rf $GOPATH/src/gozen/vendor/*
+#
+#    - cd $GOPATH/src/gozen && go vet ./...
+#
+#    # 必要パッケージインストール
+#    # - go run $GOPATH/src/gozen/tools/init.go
+#    - go get bitbucket.org/liamstask/goose/cmd/goose
+#    - go get -u github.com/kardianos/govendor
+#    - cd $GOPATH/src/gozen && govendor sync
+#    - go run $GOPATH/src/gozen/tools/setup.go
+#
+#  override:
+#    # コンパイル出来るか試す
+#    - cd $GOPATH/src/gozen/api && go build
+#    - cd $GOPATH/src/gozen/controllers && go test -bench . -benchmem
+#
+##deployment:
