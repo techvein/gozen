@@ -16,10 +16,10 @@ checkout:
 dependencies:
   override:
 #    - docker-compose up -d
-    - docker-compose build
+    - cd $GOPATH/src/gozen && docker-compose build
 test:
   pre:
-    - docker-compose run web go test -bench . -benchmem
+    - cd $GOPATH/src/gozen && docker-compose run web go test -bench . -benchmem
 
 
 #machine:
