@@ -4,9 +4,17 @@ machine:
     - sudo pip install docker-compose
   services:
     - docker
+#  environment:
+#    GOROOT: "$HOME/go"
+#    GOPATH: "$HOME/gopath"
+
+checkout:
+  post:
+    - mkdir -p "$GOPATH/src"
+    - mv "$HOME/$CIRCLE_PROJECT_REPONAME" "$GOPATH/src"
+
 dependencies:
   override:
-    - mkdir gopath
 #    - docker-compose up -d
     - docker-compose build
 test:
