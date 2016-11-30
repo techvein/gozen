@@ -21,7 +21,7 @@ dependencies:
     - cd $GOPATH/src/gozen && docker-compose build
 test:
   override:
-    - cd $GOPATH/src/gozen && docker-compose run web sh '-c' 'goose up && go test  ./controllers -bench -benchmem'
+    - cd $GOPATH/src/gozen && docker-compose run --rm web sh '-c' 'goose up && go test  ./controllers -bench -benchmem'
 
 
 #machine:

@@ -3,7 +3,7 @@ web:
   ports:
     - "5000:9000"
   volumes:
-    - ./:/myproject/gopath/src/gozen
+#    - ./:/myproject/gopath/src/gozen
     - /var/lib/mysql
   links:
     - db
