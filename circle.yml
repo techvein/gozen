@@ -2,6 +2,8 @@ machine:
   pre:
     - curl -sSL https://s3.amazonaws.com/circle-downloads/install-circleci-docker.sh | bash -s -- 1.10.0
     - sudo pip install docker-compose
+    # port3306がコンフリクトするのでci側を削除する
+    - sudo apt-get --purge autoremove -y mysql-server
   services:
     - docker
 #  environment:
@@ -18,8 +20,6 @@ dependencies:
 #    - docker-compose up -d
     - cd $GOPATH/src/gozen && docker-compose build
 test:
-  pre:
-    - cd $GOPATH/src/gozen && goose up
   override:
     - cd $GOPATH/src/gozen && docker-compose run web sh '-c' 'goose up && go test  ./controllers -bench -benchmem'
 
