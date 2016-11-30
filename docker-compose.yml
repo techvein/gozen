@@ -3,12 +3,13 @@ web:
   ports:
     - "5000:9000"
   volumes:
-    - ./:/myproject
+    - ./:/myproject/gopath/src/gozen
     - /var/lib/mysql
   links:
     - db
     # - syslog
   tty: true  
+  command: /bin/bash
   # command: bash ./build.sh
 
 db:

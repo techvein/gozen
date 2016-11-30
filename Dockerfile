@@ -6,14 +6,14 @@ RUN mkdir $MY_PROJECT
 
 
 # gopath設定
-RUN mkdir -p $MY_PROJECT/gopath
+RUN mkdir -p $MY_PROJECT/gopath/src/gozen
 ENV GOPATH $MY_PROJECT/gopath
 
 #COPY ./ci-setting.sh $MY_PROJECT
 #RUN $MY_PROJECT/ci-setting.sh
 
 
-#ADD ./gopath $GOPATH
+ADD . $GOPATH/src/gozen
 
 # goプログラム設定
 RUN mkdir -p $MY_PROJECT/golang
@@ -27,7 +27,6 @@ ENV PATH $GOPATH/bin:$MY_PROJECT/golang/go/bin:$PATH
 # Install goose that is a migration tool
 RUN go get bitbucket.org/liamstask/goose/cmd/goose
 RUN go get -u github.com/kardianos/govendor
-RUN cd $GOPATH/src/gozen && govendor sync
 # RUN go run $GOPATH/src/gozen/tools/setup.go
 
 
@@ -35,10 +34,12 @@ RUN cd $GOPATH/src/gozen && govendor sync
 RUN apt-get update && apt-get install -y net-tools
 WORKDIR $GOPATH/src/gozen
 
+RUN govendor sync
+
 # Unix syslog delivery error
 # https://groups.google.com/a/codenvy.com/d/msg/codenvy/6K6SgvK09oQ/oPswTD5aCAAJ
 RUN apt-get update -q &&  apt-get install -y rsyslog
-ENTRYPOINT /usr/sbin/rsyslogd -n
+CMD /usr/sbin/rsyslogd -n &
 
 
 
