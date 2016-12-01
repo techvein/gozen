@@ -66,7 +66,7 @@ $ curl http://localhost:9000/api/user/profile
 2. Setup GOPATH
     1. Open Preferences(⌘,) -&gt; Languages & Frameworks -&gt; Go -&gt; Go Libraries
     2. Add two paths(&lt;your project&gt; path and &lt;your project&gt;/src/gozen/vendor path) to Project libraries.
-3. Run `$GOPATH/src/gozen/symlinkVendor.sh` to completion the libraries that installed by glide within Intellij Idea.   
+3. Run `$GOPATH/src/gozen/symlinkVendor.sh` to completion the libraries that installed by a vendor tool within Intellij Idea.   
 
 
 ## With Docker

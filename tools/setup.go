@@ -19,33 +19,33 @@ var gopath string
 func main() {
 	gopath = os.Getenv("GOPATH")
 
-	//quitInstalll := make(chan bool)
+	quitInstalll := make(chan bool)
 	quitRunMigration := make(chan bool)
 
-	//go installLibraries(quitInstalll)
+	go installLibraries(quitInstalll)
 
 	go runMigration(quitRunMigration)
 
-	//<-quitInstalll
+	<-quitInstalll
 	<-quitRunMigration
 }
 
 func installLibraries(quit chan bool) {
 	os.Chdir(filepath.Join(gopath, "src/gozen"))
 
-	_, err := exec.LookPath("glide")
+	_, err := exec.LookPath("govendor")
 	if err != nil {
-		log.Fatal("Please install glide that is a package management tool.")
+		log.Fatal("Please install govendor that is a package management tool.")
 	}
 
-	cmd := exec.Command("glide", "up")
-	fmt.Print("run", cmd.Path, "up...")
+	cmd := exec.Command("govendor", "sync")
+	fmt.Print("run", cmd.Path, "sync...")
 	err = cmd.Run()
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	fmt.Println("Done glide up.")
+	fmt.Println("Done govendor sync.")
 	quit <- true
 }
 
