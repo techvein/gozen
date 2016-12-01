@@ -22,9 +22,10 @@ machine:
 test:
   override:
     - docker-compose up -d
-    - sudo lxc-attach -n "$(docker inspect --format '{{.Id}}' web)" -- bash -c 'go get bitbucket.org/liamstask/goose/cmd/goose'
-    - sudo lxc-attach -n "$(docker inspect --format '{{.Id}}' web)" -- bash -c 'go get -u github.com/kardianos/govendor'
-    - sudo lxc-attach -n "$(docker inspect --format '{{.Id}}' web)" -- bash -c 'goose up && go test  ./controllers -bench -benchmem'
+    - docker-compose run web sh '-c' 'go get bitbucket.org/liamstask/goose/cmd/goose && go get -u github.com/kardianos/govendor && goose up && go test  ./controllers -bench -benchmem'
+#    - sudo lxc-attach -n "$(docker inspect --format '{{.Id}}' web)" -- bash -c 'go get bitbucket.org/liamstask/goose/cmd/goose'
+#    - sudo lxc-attach -n "$(docker inspect --format '{{.Id}}' web)" -- bash -c 'go get -u github.com/kardianos/govendor'
+#    - sudo lxc-attach -n "$(docker inspect --format '{{.Id}}' web)" -- bash -c 'goose up && go test  ./controllers -bench -benchmem'
 #    - cd $GOPATH/src/gozen && docker-compose run --rm web sh '-c' 'goose up && go test  ./controllers -bench -benchmem'
 
 
