@@ -2,8 +2,6 @@ machine:
   pre:
     - curl -sSL https://s3.amazonaws.com/circle-downloads/install-circleci-docker.sh | bash -s -- 1.10.0
     - sudo pip install docker-compose
-    # port3306がコンフリクトするのでci側を削除する
-    - sudo apt-get --purge autoremove -y mysql-server
   services:
     - docker
 
