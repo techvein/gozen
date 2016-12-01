@@ -22,9 +22,9 @@ machine:
 test:
   override:
     - docker-compose up -d
-    - docker exec -it myapp_web_1 go get bitbucket.org/liamstask/goose/cmd/goose
-    - docker exec -it myapp_web_1 go get -u github.com/kardianos/govendor
-    - docker exec -it myapp_web_1 sh '-c' 'goose up && go test  ./controllers -bench -benchmem'
+    - docker exec -it web go get bitbucket.org/liamstask/goose/cmd/goose
+    - docker exec -it web go get -u github.com/kardianos/govendor
+    - docker exec -it web sh '-c' 'goose up && go test  ./controllers -bench -benchmem'
 #    - cd $GOPATH/src/gozen && docker-compose run --rm web sh '-c' 'goose up && go test  ./controllers -bench -benchmem'
 
 
