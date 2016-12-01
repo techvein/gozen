@@ -10,18 +10,22 @@ machine:
 #    GOROOT: "$HOME/go"
 #    GOPATH: "$HOME/gopath"
 
-checkout:
-  post:
-    - mkdir -p "$GOPATH/src"
-    - mv "$HOME/$CIRCLE_PROJECT_REPONAME" "$GOPATH/src"
+#checkout:
+#  post:
+#    - mkdir -p "$GOPATH/src"
+#    - mv "$HOME/$CIRCLE_PROJECT_REPONAME" "$GOPATH/src"
 
-dependencies:
-  override:
+#dependencies:
+#  override:
 #    - docker-compose up -d
-    - cd $GOPATH/src/gozen && docker-compose build
+#    - cd $GOPATH/src/gozen && docker-compose build
 test:
   override:
-    - cd $GOPATH/src/gozen && docker-compose run --rm web sh '-c' 'goose up && go test  ./controllers -bench -benchmem'
+    - docker-compose up -d
+    - docker exec -it myapp_web_1 go get bitbucket.org/liamstask/goose/cmd/goose
+    - docker exec -it myapp_web_1 go get -u github.com/kardianos/govendor
+    - docker exec -it myapp_web_1 sh '-c' 'goose up && go test  ./controllers -bench -benchmem'
+#    - cd $GOPATH/src/gozen && docker-compose run --rm web sh '-c' 'goose up && go test  ./controllers -bench -benchmem'
 
 
 #machine:

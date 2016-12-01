@@ -1,27 +1,52 @@
 web:
-  build: .
+  image: golang:1.7.3
   ports:
     - "5000:9000"
   volumes:
-#    - ./:/myproject/gopath/src/gozen
-    - /var/lib/mysql
+    - ./:/go/src/gozen
+  working_dir: "/go/src/gozen"
   links:
     - db
-    # - syslog
-  tty: true  
+  tty: true
   command: /bin/bash
-  # command: bash ./build.sh
 
 db:
-  build: ./mysql
-  ports:
-    - "3306:3306" 
+  container_name: db
+  image: mysql:5.7
   environment:
     MYSQL_ROOT_PASSWORD: rootpass
     MYSQL_DATABASE: gozen
     MYSQL_USER: gozen
     MYSQL_PASSWORD: rootpass
-      # MYSQL_HOST: ""
+  volumes:
+    - ./mysql:/etc/mysql/conf.d
+    - /var/lib/mysql
+
+
+#web:
+#  build: .
+#  ports:
+#    - "5000:9000"
+#  volumes:
+##    - ./:/myproject/gopath/src/gozen
+#    - /var/lib/mysql
+#  links:
+#    - db
+#    # - syslog
+#  tty: true
+#  command: /bin/bash
+#  # command: bash ./build.sh
+#
+#db:
+#  build: ./mysql
+#  ports:
+#    - "3306:3306"
+#  environment:
+#    MYSQL_ROOT_PASSWORD: rootpass
+#    MYSQL_DATABASE: gozen
+#    MYSQL_USER: gozen
+#    MYSQL_PASSWORD: rootpass
+#      # MYSQL_HOST: ""
 
 
 # syslog:
