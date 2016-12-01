@@ -1,6 +1,5 @@
 machine:
   pre:
-    - go get -u github.com/kardianos/govendor && govendor sync
     - curl -sSL https://s3.amazonaws.com/circle-downloads/install-circleci-docker.sh | bash -s -- 1.10.0
     - sudo pip install docker-compose
     # port3306がコンフリクトするのでci側を削除する
@@ -8,7 +7,12 @@ machine:
   services:
     - docker
 
+dependencies:
+  pre:
+    - go get -u github.com/kardianos/govendor
+    - go get bitbucket.org/liamstask/goose/cmd/goose
+
 test:
   override:
     - docker-compose up -d
-    - docker-compose run web sh '-c' 'go get bitbucket.org/liamstask/goose/cmd/goose && goose up && go test  ./controllers -bench -benchmem'
+    - docker-compose run web sh '-c' 'goose up && govendor sync && go test  ./controllers -bench -benchmem'
