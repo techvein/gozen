@@ -5,7 +5,6 @@ web:
     - "5000:9000"
   volumes:
     - ./:/go/src/gozen
-    - $GOPATH/bin:/go/bin
   working_dir: "/go/src/gozen"
   links:
     - db

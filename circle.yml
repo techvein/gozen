@@ -7,12 +7,7 @@ machine:
   services:
     - docker
 
-dependencies:
-  pre:
-    - go get -u github.com/kardianos/govendor
-    - go get bitbucket.org/liamstask/goose/cmd/goose
-
 test:
   override:
     - docker-compose up -d
-    - docker-compose run web sh '-c' 'goose up && govendor sync && go test  ./controllers -bench -benchmem'
+    - docker-compose run web sh '-c' 'go get bitbucket.org/liamstask/goose/cmd/goose && go get -u github.com/kardianos/govendor && goose up && govendor sync && go test  ./controllers -bench -benchmem'
