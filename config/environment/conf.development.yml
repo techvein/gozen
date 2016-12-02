@@ -3,7 +3,7 @@ database:
   database: gozen
   username: gozen
   password: rootpass
-  host: 127.0.0.1
+  host: db
   port: 3306
 
 
@@ -24,7 +24,7 @@ oauth:
 
 log:
   verbose: true
-  file_path: /var/work/src/gozen/gozen.log
+  file_path:
 
 push:
     gcm:
