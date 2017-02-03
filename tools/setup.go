@@ -33,19 +33,19 @@ func main() {
 func installLibraries(quit chan bool) {
 	os.Chdir(filepath.Join(gopath, "src/gozen"))
 
-	_, err := exec.LookPath("govendor")
+	_, err := exec.LookPath("dep")
 	if err != nil {
 		log.Fatal("Please install govendor that is a package management tool.")
 	}
 
-	cmd := exec.Command("govendor", "sync")
-	fmt.Print("run", cmd.Path, "sync...")
+	cmd := exec.Command("dep", "ensure", "-update", "-v")
+	fmt.Print("run", cmd.Path, "ensure -update -v ...")
 	err = cmd.Run()
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	fmt.Println("Done govendor sync.")
+	fmt.Println("Done dep ensure update.")
 	quit <- true
 }
 

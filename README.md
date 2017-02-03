@@ -72,6 +72,10 @@ $ curl http://localhost:9000/api/user/profile
 ## With Docker
 
 TODO
+1. docker-compose up -d
+2. docker-compose exec web /bin/bash
+3. go get -u github.com/golang/dep/...
+4. dep ensure -update -v
 
 ## With vagrant
 

@@ -12,7 +12,7 @@ import (
 var gopath string
 
 var libs = []string{
-	"github.com/kardianos/govendor",
+	"github.com/golang/dep/...",
 	"bitbucket.org/liamstask/goose/cmd/goose",
 	"gopkg.in/yaml.v2",
 }
