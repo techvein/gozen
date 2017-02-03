@@ -2,10 +2,10 @@ package controllers
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/google/logger"
 
 	"gozen/config"
 	"gozen/models"
@@ -39,7 +39,7 @@ func (self OAuthController) Login() gin.HandlerFunc {
 // CallBack処理を行う
 func (self OAuthController) CallBack() gin.HandlerFunc {
 	return jsonController(func(c *gin.Context) (interface{}, models.Error) {
-		logger.Infoln(c.Request.URL)
+		log.Println(c.Request.URL)
 		user, err := self.User.Callback(c.Query("state"), c.Query("code"))
 		if err != nil {
 			return nil, models.NewError(http.StatusBadRequest, err.Error())
@@ -55,7 +55,7 @@ func commonOauthController(c *gin.Context, user oauth.User) (interface{}, models
 	}
 	url := fmt.Sprintf("%s?token=%s", config.Oauth.AfterOauthUrl, token)
 
-	logger.Infoln(url)
+	log.Println(url)
 	c.Redirect(http.StatusTemporaryRedirect, url)
 	return nil, nil
 }

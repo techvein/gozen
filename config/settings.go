@@ -2,10 +2,10 @@ package config
 
 import (
 	"io/ioutil"
+	"log"
 	"os"
 	"path/filepath"
 
-	"github.com/google/logger"
 	"gopkg.in/yaml.v2"
 )
 
@@ -34,7 +34,7 @@ func GetEnv() Env {
 
 	env := os.Getenv(gozenEnvKey)
 	if env == "" {
-		logger.Infoln("環境変数:" + gozenEnvKey + "が設定されていません。" + DevelopmentStr + "として動作します。")
+		log.Println("環境変数:" + gozenEnvKey + "が設定されていません。" + DevelopmentStr + "として動作します。")
 		gozenEnv = Development
 		return gozenEnv
 	}
@@ -76,13 +76,13 @@ func init() {
 	filePath := filepath.Join(gopath, "src/gozen/config/environment", "conf."+env.Name()+".yml")
 	file, err := ioutil.ReadFile(filePath)
 	if err != nil {
-		logger.Fatal(err)
+		log.Fatal(err)
 	}
 
 	var conf confYml
 	err = yaml.Unmarshal([]byte(file), &conf)
 	if err != nil {
-		logger.Fatal(err)
+		log.Fatal(err)
 	}
 	Db = conf.Database
 	Oauth = conf.Oauth

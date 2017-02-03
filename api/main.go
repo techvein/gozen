@@ -13,7 +13,6 @@ import (
 	"syscall"
 
 	"github.com/gin-gonic/gin"
-	"github.com/google/logger"
 
 	"gozen/config"
 	"gozen/controllers"
@@ -37,8 +36,6 @@ func main() {
 	}
 	defer lf.Close()
 
-	logger.Init("gozenLogger", config.Log.Verbose, true, lf)
-
 	sig := make(chan os.Signal)
 	signal.Notify(sig, os.Interrupt)
 	signal.Notify(sig, syscall.SIGTERM)
@@ -46,33 +43,33 @@ func main() {
 	switch config.GetEnv() {
 	case config.Production:
 		// TODO
+		log.Println(config.ProductionStr)
 		gin.SetMode(gin.ReleaseMode)
-		logger.Infoln(config.ProductionStr)
 	case config.Staging:
 		// TODO
-		logger.Infoln(config.StagingStr)
+		log.Println(config.Staging)
 	case config.Development:
 		// TODO
-		logger.Infoln(config.DevelopmentStr)
+		log.Println(config.Development)
 	}
 
 	if pprof {
 		runtime.SetBlockProfileRate(1)
 		go func() {
 			// :6060/debug/pprof/ でプロファイリング結果を確認できる
-			logger.Infoln(http.ListenAndServe("0.0.0.0:6060", nil))
+			log.Println(http.ListenAndServe("0.0.0.0:6060", nil))
 		}()
 	}
 
 	router := controllers.Routes()
 
 	if useHttp {
-		logger.Infoln("use http")
+		log.Println("use http")
 		go func() {
 			http.ListenAndServe(":9000", router)
 		}()
 	} else {
-		logger.Infoln("use fcgi(nginx)")
+		log.Println("use fcgi(nginx)")
 		listen, err := net.Listen("tcp", "127.0.0.1:9000")
 		if err != nil {
 			return

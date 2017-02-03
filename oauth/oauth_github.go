@@ -2,9 +2,9 @@ package oauth
 
 import (
 	"errors"
+	"log"
 
 	"github.com/google/go-github/github"
-	"github.com/google/logger"
 	"golang.org/x/oauth2"
 	githuboauth "golang.org/x/oauth2/github"
 
@@ -47,13 +47,13 @@ func (self *OAuthGithub) GenerateLoginUrl() string {
 // CallBack処理を行う
 func (self *OAuthGithub) Callback(state string, code string) (User, error) {
 	if state != oauthStateString {
-		logger.Errorf("invalid oauth state, expected '%s', got '%s'\n", oauthStateString, state)
+		log.Printf("invalid oauth state, expected '%s', got '%s'\n", oauthStateString, state)
 		return nil, errors.New("invalid oauth state")
 	}
 
 	token, err := oauthConf.Exchange(oauth2.NoContext, code)
 	if err != nil {
-		logger.Errorf("oauthConf.Exchange() failed with '%s'\n", err)
+		log.Printf("oauthConf.Exchange() failed with '%s'\n", err)
 		return nil, errors.New("oauthConf.Exchange() failed")
 	}
 
@@ -67,14 +67,14 @@ func (self *OAuthGithub) Callback(state string, code string) (User, error) {
 		// https://godoc.org/github.com/google/go-github/github#UsersService.ListEmails
 		emails, _, _ := client.Users.ListEmails(nil)
 		for _, email := range emails {
-			logger.Infoln("Email:", *email.Email, "Primary:", *email.Primary, "Verified:", *email.Verified)
+			log.Println("Email:", *email.Email, "Primary:", *email.Primary, "Verified:", *email.Verified)
 			user.Email = email.Email
 			break
 		}
 	}
 
 	if err != nil {
-		logger.Errorf("client.Users.Get() faled with '%s'\n", err)
+		log.Printf("client.Users.Get() faled with '%s'\n", err)
 		return nil, errors.New("client.Users.Get() faled")
 	}
 
