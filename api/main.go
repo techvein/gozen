@@ -43,11 +43,14 @@ func main() {
 	switch config.GetEnv() {
 	case config.Production:
 		// TODO
+		log.Println(config.ProductionStr)
 		gin.SetMode(gin.ReleaseMode)
 	case config.Staging:
 		// TODO
+		log.Println(config.Staging)
 	case config.Development:
 		// TODO
+		log.Println(config.Development)
 	}
 
 	if pprof {
