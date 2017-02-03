@@ -4,9 +4,9 @@ import (
 	"crypto/rand"
 	"encoding/base64"
 	"io"
+	"log"
 	"net/http"
 	"time"
-	"log"
 
 	"github.com/gocraft/dbr"
 
