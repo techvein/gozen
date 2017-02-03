@@ -57,7 +57,7 @@ func main() {
 		runtime.SetBlockProfileRate(1)
 		go func() {
 			// :6060/debug/pprof/ でプロファイリング結果を確認できる
-			http.ListenAndServe("0.0.0.0:6060", nil)
+			log.Println(http.ListenAndServe("0.0.0.0:6060", nil))
 		}()
 	}
 
