@@ -2,11 +2,11 @@ package db
 
 import (
 	"fmt"
+	"log"
 	"sync"
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/gocraft/dbr"
-	"github.com/google/logger"
 
 	"gozen/config"
 )
@@ -32,7 +32,7 @@ func connect() *dbr.Session {
 
 	conn, err := dbr.Open(config.Db.Adapter, dsn+"?charset=utf8&parseTime=True", nil)
 	if err != nil {
-		logger.Fatalln(err)
+		log.Fatalln(err)
 	}
 
 	return conn.NewSession(nil)

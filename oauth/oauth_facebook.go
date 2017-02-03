@@ -5,10 +5,10 @@ import (
 	"errors"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"strconv"
 
-	"github.com/google/logger"
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/facebook"
 
@@ -109,7 +109,7 @@ func (self *OAuthFacebook) CheckToken(client *http.Client, accessToken *facebook
 		return false, errors.New("request error.")
 	}
 
-	logger.Infoln(facebookData.Data.AppID)
+	log.Println(facebookData.Data.AppID)
 	if facebookData.Data.AppID != self.conf.ClientID {
 		return false, errors.New("The facebookToken is wrong.")
 	}
@@ -124,7 +124,7 @@ func (self *OAuthFacebook) request(client *http.Client, result interface{}, path
 	defer response.Body.Close()
 
 	contents, err := ioutil.ReadAll(response.Body)
-	logger.Infoln(string(contents))
+	log.Println(string(contents))
 	if err != nil {
 		return err
 	}

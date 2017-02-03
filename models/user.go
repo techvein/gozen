@@ -8,11 +8,11 @@ import (
 	"time"
 
 	"github.com/gocraft/dbr"
-	"github.com/google/logger"
 
 	"gozen/db"
 	"gozen/models/json"
 	"gozen/oauth"
+	"log"
 )
 
 type User struct {
@@ -126,7 +126,7 @@ func (self *User) registerNewUser(ou oauth.User, token string) (*User, error) {
 	).Exec()
 
 	if err != nil {
-		logger.Errorln(err)
+		log.Println(err)
 		tx.Rollback()
 		return nil, err
 	}
@@ -148,7 +148,7 @@ func (self *User) registerNewUser(ou oauth.User, token string) (*User, error) {
 	).Exec()
 
 	if err != nil {
-		logger.Errorln(err)
+		log.Println(err)
 		tx.Rollback()
 		return nil, err
 	}
@@ -179,16 +179,16 @@ func (self *User) ToJson() *json.UserJson {
 
 // セッショントークンをキーにUserを検索する
 func (self *User) FindUserBySessionToken(token string) error {
-	logger.Infoln(token)
+	log.Println(token)
 	err := db.GetSession().Select(userColumns...).From(self.TableName()).
 		Where("session_token = ?", token).
 		LoadStruct(self)
 	if err != nil {
 		LoginUser = nil
-		logger.Errorln(err)
+		log.Println(err)
 		return err
 	}
-	logger.Infoln(self.Id)
+	log.Println(self.Id)
 	LoginUser = self
 	return nil
 }
