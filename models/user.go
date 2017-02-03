@@ -6,13 +6,13 @@ import (
 	"io"
 	"net/http"
 	"time"
+	"log"
 
 	"github.com/gocraft/dbr"
 
 	"gozen/db"
 	"gozen/models/json"
 	"gozen/oauth"
-	"log"
 )
 
 type User struct {

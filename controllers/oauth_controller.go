@@ -3,13 +3,13 @@ package controllers
 import (
 	"fmt"
 	"net/http"
+	"log"
 
 	"github.com/gin-gonic/gin"
 
 	"gozen/config"
 	"gozen/models"
 	"gozen/oauth"
-	"log"
 )
 
 // 認証コントローラー
