@@ -26,7 +26,7 @@ gozen.log
 
 .DS_Store
 
-vendor/*/
-!vendor/.gitkeep
-api/api
+src/gozen/vendor/*/
+!src/gozen/vendor/.gitkeep
+src/gozen/api/api
 #dbconf.yml

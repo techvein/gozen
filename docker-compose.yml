@@ -1,18 +1,18 @@
 web:
-  container_name: web
+  container_name: gozen_web
   image: golang:1.7.3
   ports:
     - "5000:9000"
   volumes:
-    - ./:/go/src/gozen
-  working_dir: "/go/src/gozen"
+    - ./src:/go/src/
+  working_dir: "/go/src"
   links:
     - db
   tty: true
   command: /bin/bash
 
 db:
-  container_name: db
+  container_name: gozen_db
   image: mysql:5.7
   environment:
     MYSQL_ROOT_PASSWORD: rootpass
