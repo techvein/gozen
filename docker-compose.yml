@@ -4,8 +4,8 @@ web:
   ports:
     - "5000:9000"
   volumes:
-    - ./src:/go/src/
-  working_dir: "/go/src"
+    - ./src:/go/src
+  working_dir: "/go/src/gozen"
   links:
     - db
   tty: true

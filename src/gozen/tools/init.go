@@ -15,7 +15,10 @@ var tools = []string{
 
 func main() {
 	gopath := os.Getenv("GOPATH")
-	os.Chdir(filepath.Join(gopath, "src/gozen"))
+	err := os.Chdir(filepath.Join(gopath, "src/tools"))
+	if err != nil {
+		log.Println(err)
+	}
 
 	goRunTools()
 
