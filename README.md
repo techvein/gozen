@@ -12,70 +12,28 @@ We don't think this project is best practice, so we have some plans to improve t
 
 # Usage
 
-1.Create your project directory.
+If you use Docker Compose, to set up is easy.
 
-```bash
-$ mkdir -p <your project>/src
+```
+% docker-compose up -d
+% docker-compose exec web bin/bash
+$ go run tools/init.go
+$ bash ./build.sh
 ```
 
-2.Set GOPATH environment.
+Check the response
 
 ```bash
-$ export GOPATH=<your project>
-```
-
-3.Git clone gozen
-
-```bash
-$ git clone https://github.com/techvein/gozen.git $GOPATH/src/gozen
-```
-
-4.After run mysql, setup mysql
-
-```bash
-$ cd $GOPATH/src/gozen
-$ mysql -u root -prootpass < db/setup/mysql.sql
-```
-
-5.Run setup (install libraries)
-
-```bash
-$ go get bitbucket.org/liamstask/goose/cmd/goose
-$ go get -u github.com/kardianos/govendor
-$ cd $GOPATH/src/gozen && govendor sync
-$ go run $GOPATH/src/gozen/tools/setup.go
-```
-
-6.Run build.
-
-```bash
-$ cd $GOPATH/src/gozen
-$ ./build.sh
-```
-
-7.Check the response
-
-```bash
-$ curl http://localhost:9000/api/user/profile
+% curl http://localhost:5000/api/user/profile
 {"message": "ログインしてください。"}
 ```
 
-## With Intellij Idea
+## With Gogland
 
-1. Open &lt;your project&gt; from File -&gt; Open... 
-2. Setup GOPATH
-    1. Open Preferences(⌘,) -&gt; Languages & Frameworks -&gt; Go -&gt; Go Libraries
-    2. Add two paths(&lt;your project&gt; path and &lt;your project&gt;/src/gozen/vendor path) to Project libraries.
-3. Run `$GOPATH/src/gozen/symlinkVendor.sh` to completion the libraries that installed by a vendor tool within Intellij Idea.   
+#### Setup GOPATH
+1. Open Preferences(⌘,) -&gt; Go -&gt; GOPATH
+2. Add `<your project path>/src/gozen` to Project GOPATH.
 
-
-## With Docker
-
-TODO
-
-## With vagrant
-
-TODO
 
 # Contribution
 
