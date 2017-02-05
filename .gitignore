@@ -26,6 +26,7 @@ gozen.log
 
 .DS_Store
 
+.idea/
 
 src/
 !src/gozen
