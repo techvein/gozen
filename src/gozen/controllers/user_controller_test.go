@@ -8,13 +8,13 @@ import (
 	"gozen/controllers"
 	"gozen/db"
 	"gozen/models"
-	. "gozen/models/json"
+	"gozen/models/json"
 )
 
 // ユーザーの確認
 func TestUser(t *testing.T) {
-	var userJson UserJson
-	var mr MessageResponse
+	var userJson json.UserJson
+	var mr json.MessageResponse
 
 	const sessionToken = "1234"
 
