@@ -1,6 +1,6 @@
 web:
   container_name: gozen_web
-  image: golang:1.7.3
+  image: golang:1.8
   ports:
     - "5000:9000"
   volumes:
