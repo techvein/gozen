@@ -30,3 +30,5 @@ gozen.log
 
 src/
 !src/gozen
+
+vendor/

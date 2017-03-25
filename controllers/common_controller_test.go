@@ -12,7 +12,7 @@ import (
 	"strings"
 	"testing"
 
-	"gozen/controllers"
+	"github.com/techvein/gozen/controllers"
 )
 
 var (

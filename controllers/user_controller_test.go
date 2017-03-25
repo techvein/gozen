@@ -5,10 +5,10 @@ import (
 	"testing"
 	"time"
 
-	"gozen/controllers"
-	"gozen/db"
-	"gozen/models"
-	"gozen/models/json"
+	"github.com/techvein/gozen/controllers"
+	"github.com/techvein/gozen/db"
+	"github.com/techvein/gozen/models"
+	"github.com/techvein/gozen/models/json"
 )
 
 // ユーザーの確認

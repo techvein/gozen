@@ -3,7 +3,7 @@ package controllers
 import (
 	"github.com/gin-gonic/gin"
 
-	"gozen/models"
+	"github.com/techvein/gozen/models"
 )
 
 const (

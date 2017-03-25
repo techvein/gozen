@@ -8,7 +8,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/gocraft/dbr"
 
-	"gozen/config"
+	"github.com/techvein/gozen/config"
 )
 
 var session *dbr.Session

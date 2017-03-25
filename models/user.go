@@ -10,9 +10,9 @@ import (
 
 	"github.com/gocraft/dbr"
 
-	"gozen/db"
-	"gozen/models/json"
-	"gozen/oauth"
+	"github.com/techvein/gozen/db"
+	"github.com/techvein/gozen/models/json"
+	"github.com/techvein/gozen/oauth"
 )
 
 type User struct {

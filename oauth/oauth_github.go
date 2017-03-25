@@ -1,6 +1,7 @@
 package oauth
 
 import (
+	"context"
 	"errors"
 	"log"
 
@@ -8,7 +9,7 @@ import (
 	"golang.org/x/oauth2"
 	githuboauth "golang.org/x/oauth2/github"
 
-	"gozen/config"
+	"github.com/techvein/gozen/config"
 )
 
 type OAuthGithub struct {
@@ -56,16 +57,17 @@ func (self *OAuthGithub) Callback(state string, code string) (User, error) {
 		log.Printf("oauthConf.Exchange() failed with '%s'\n", err)
 		return nil, errors.New("oauthConf.Exchange() failed")
 	}
+	ctx:= context.Background()
 
 	oauthClient := oauthConf.Client(oauth2.NoContext, token)
 	client := github.NewClient(oauthClient)
-	user, _, err := client.Users.Get("")
+	user, _, err := client.Users.Get(ctx, "")
 
 	// Note: The returned email is the user's publicly visible email address (or null if the user has not specified a public email address in their profile
 	// https://developer.github.com/v3/users/#get-a-single-user
 	if user.Email == nil {
 		// https://godoc.org/github.com/google/go-github/github#UsersService.ListEmails
-		emails, _, _ := client.Users.ListEmails(nil)
+		emails, _, _ := client.Users.ListEmails(ctx, nil)
 		for _, email := range emails {
 			log.Println("Email:", *email.Email, "Primary:", *email.Primary, "Verified:", *email.Verified)
 			user.Email = email.Email

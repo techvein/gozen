@@ -14,8 +14,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"gozen/config"
-	"gozen/controllers"
+	"github.com/techvein/gozen/config"
+	"github.com/techvein/gozen/controllers"
 )
 
 func main() {

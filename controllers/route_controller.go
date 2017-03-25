@@ -3,7 +3,7 @@ package controllers
 import (
 	"github.com/gin-gonic/gin"
 
-	"gozen/oauth"
+	"github.com/techvein/gozen/oauth"
 )
 
 // 参考: https://github.com/konjoot/microservice_experiments/blob/master/gin-gonic/src/router/router.go
