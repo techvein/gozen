@@ -3,6 +3,7 @@ machine:
     - docker
 dependencies:
   override:
+    - go get -u github.com/golang/dep/... &&  dep ensure -update
     - docker build -t ci .
 test:
   override:
