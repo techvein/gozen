@@ -6,4 +6,4 @@ dependencies:
     - docker build -t ci .
 test:
   override:
-    - docker run ci go version && go get -u github.com/golang/dep/... && dep ensure -update && go test ./sample
+    - docker run ci sh '-c' 'go version && go get -u github.com/golang/dep/... && dep ensure -update && go test ./sample'
