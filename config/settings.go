@@ -1,9 +1,11 @@
 package config
 
 import (
+	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
+	"path"
 	"path/filepath"
 
 	"gopkg.in/yaml.v2"
@@ -73,7 +75,7 @@ func init() {
 	var err error
 
 	// conf.<環境名>.ymlファイルから読み込む
-	filePath := filepath.Join(gopath, "src/gozen/config/environment", "conf."+env.Name()+".yml")
+	filePath := filepath.Join(gopath, "src/github.com/techvein/gozen/config/environment", "conf."+env.Name()+".yml")
 	file, err := ioutil.ReadFile(filePath)
 	if err != nil {
 		log.Fatal(err)
@@ -91,7 +93,13 @@ func init() {
 	// "file_path"の設定がなければgopath/log/gozen.logに設定する
 	// "verbose"の設定がない場合はfalseになる
 	if conf.Log.FilePath == "" {
-		conf.Log.FilePath = "/var/log/gozen.log"
+		ex, err := os.Executable()
+	    if err != nil {
+	        panic(err)
+	    }
+	    exPath := path.Dir(ex)
+	    fmt.Println(exPath)
+		conf.Log.FilePath =  exPath + "/gozen.log"
 	}
 	Log = conf.Log
 }

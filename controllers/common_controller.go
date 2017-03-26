@@ -5,8 +5,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"gozen/models"
-	"gozen/models/json"
+	"github.com/techvein/gozen/models"
+	"github.com/techvein/gozen/models/json"
 )
 
 func middleWares(engine *gin.Engine) {

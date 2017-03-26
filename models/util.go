@@ -5,7 +5,7 @@ import (
 	"reflect"
 	"time"
 
-	"gozen/entity"
+	"github.com/techvein/gozen/entity"
 )
 
 const tagName string = "db"

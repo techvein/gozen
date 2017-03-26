@@ -6,9 +6,9 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/google/go-gcm"
 
-	"gozen/config"
-	"gozen/models"
-	"gozen/models/json"
+	"github.com/techvein/gozen/config"
+	"github.com/techvein/gozen/models"
+	"github.com/techvein/gozen/models/json"
 )
 
 type PushNotificationController struct{}

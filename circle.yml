@@ -1,11 +1,9 @@
 machine:
-  pre:
-    - curl -sSL https://s3.amazonaws.com/circle-downloads/install-circleci-docker.sh | bash -s -- 1.10.0
-    - sudo pip install docker-compose
   services:
     - docker
-
+dependencies:
+  override:
+    - docker build -t ci .
 test:
   override:
-    - docker-compose up -d
-    - docker-compose run web sh '-c' 'go run tools/init.go && go test  ./controllers -bench -benchmem'
+    - docker run ci sh '-c' 'go version && go get -u github.com/golang/dep/... && dep ensure -update && go test ./sample'

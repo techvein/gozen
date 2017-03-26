@@ -9,7 +9,7 @@ import (
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
 
-	"gozen/config"
+	"github.com/techvein/gozen/config"
 )
 
 type OAuthGoogle struct {

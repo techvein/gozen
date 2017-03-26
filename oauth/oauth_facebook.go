@@ -12,8 +12,8 @@ import (
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/facebook"
 
-	"gozen/config"
-	"gozen/models/json"
+	"github.com/techvein/gozen/config"
+	"github.com/techvein/gozen/models/json"
 )
 
 type OAuthFacebook struct {

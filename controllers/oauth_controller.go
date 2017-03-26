@@ -7,9 +7,9 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"gozen/config"
-	"gozen/models"
-	"gozen/oauth"
+	"github.com/techvein/gozen/config"
+	"github.com/techvein/gozen/models"
+	"github.com/techvein/gozen/oauth"
 )
 
 // 認証コントローラー
